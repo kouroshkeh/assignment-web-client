@@ -73,8 +73,12 @@ class HTTPClient(object):
     def GET(self, url, args=None):
         parsed_url = urllib.parse.urlparse(url)
         host = parsed_url.hostname
-        port = parsed_url.port if parsed_url.port else 80
-        path = parsed_url.path if parsed_url.path else '/'
+        if parsed_url.port:
+            port = parsed_url.port
+        else: port = 80
+        if parsed_url.path:
+            path = parsed_url.path
+        else: path = '/'
         self.connect(host, port)
         request = f"GET {path} HTTP/1.1\r\nHost: {host}\r\nConnection: close\r\n\r\n"
         self.sendall(request)
@@ -88,8 +92,12 @@ class HTTPClient(object):
     def POST(self, url, args=None):
         parsed_url = urllib.parse.urlparse(url)
         host = parsed_url.hostname
-        port = parsed_url.port if parsed_url.port else 80
-        path = parsed_url.path if parsed_url.path else '/'
+        if parsed_url.port:
+            port = parsed_url.port
+        else: port = 80
+        if parsed_url.path:
+            path = parsed_url.path
+        else: path = '/'
         self.connect(host, port)
         body = urllib.parse.urlencode(args) if args else ""
         length = len(body)
